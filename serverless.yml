@@ -23,6 +23,7 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:PutItem
+        - dynamodb:GetItem
       Resource: !GetAtt RequestsTable.Arn
     - Effect: Allow
       Action:
@@ -44,6 +45,12 @@ functions:
     events:
       - http:
           path: /{base}/{target}/{amount}
+          method: get
+  ExchangeEvent:
+    handler: bin/exchangeevent
+    events:
+      - http:
+          path: /event/{id}
           method: get
 
 resources:
